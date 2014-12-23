@@ -1,2 +1,23 @@
+## pose_cov_ops (indigo) - 0.1.4-0
+
+The packages in the `pose_cov_ops` repository were released into the `indigo` distro by running `/usr/local/bin/bloom-release --rosdistro indigo --track indigo pose_cov_ops --edit` on `Tue, 23 Dec 2014 12:43:00 -0000`
+
+The `pose_cov_ops` package was released.
+
+Version of package(s) in repository `pose_cov_ops`:
+- upstream repository: https://github.com/mrpt-ros-pkg/pose_cov_ops.git
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `0.1.4-0`
+
+Versions of tools used:
+- bloom version: `0.5.16`
+- catkin_pkg version: `0.2.6`
+- rosdep version: `0.11.0`
+- rosdistro version: `0.4.0`
+- vcstools version: `0.1.36`
+
+
 pose_cov_ops-release
 ====================
