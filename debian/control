@@ -1,0 +1,12 @@
+Source: ros-jade-pose-cov-ops
+Section: misc
+Priority: extra
+Maintainer: Jose-Luis Blanco-Claraco <jlblanco@ual.es>
+Build-Depends: debhelper (>= 9.0.0), libmrpt-dev, ros-jade-catkin, ros-jade-geometry-msgs, ros-jade-mrpt-bridge, ros-jade-roscpp
+Homepage: http://wiki.ros.org/pose_cov_ops
+Standards-Version: 3.9.2
+
+Package: ros-jade-pose-cov-ops
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libmrpt-dev, ros-jade-geometry-msgs, ros-jade-mrpt-bridge, ros-jade-roscpp
+Description: Library with C++ functions for SE(2/3) pose and 2D/3D point composition operations with uncertainty
