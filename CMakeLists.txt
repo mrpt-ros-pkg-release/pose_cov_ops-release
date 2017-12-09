@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
-set (CMAKE_CXX_STANDARD 14)
+set (CMAKE_CXX_STANDARD 14) # C++14 actually only needed when building 
+# from sources and against mrpt>=1.9. No C++14 features used in this pkg.
+
 project(pose_cov_ops)
 
 ## Find catkin macros and libraries
@@ -10,11 +12,19 @@ find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs mrpt_bridge)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
-find_package(MRPT 1.5 REQUIRED base)
-#include_directories(${MRPT_INCLUDE_DIRS})
-#MESSAGE( STATUS "MRPT_INCLUDE_DIRS: " ${MRPT_INCLUDE_DIRS})
-#link_directories(${MRPT_LIBRARY_DIRS})
-#MESSAGE( STATUS "MRPT_LIBRARY_DIRS: " ${MRPT_LIBS})
+find_package(MRPT REQUIRED base)
+MESSAGE(STATUS "Found MRPT: " ${MRPT_VERSION})
+
+if (CMAKE_COMPILER_IS_GNUCXX)
+	# High level of warnings.
+	# The -Wno-long-long is required in 64bit systems when including sytem headers.
+	# The -Wno-variadic-macros was needed for Eigen3, StdVector.h
+	add_compile_options(-Wall -Wno-long-long -Wno-variadic-macros)
+	# Workaround: Eigen <3.4 produces *tons* of warnings in GCC >=6. See http://eigen.tuxfamily.org/bz/show_bug.cgi?id=1221
+	if (NOT ${CMAKE_CXX_COMPILER_VERSION} LESS "6.0")
+		add_compile_options(-Wno-ignored-attributes -Wno-int-in-bool-context)
+	endif()
+endif()
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
