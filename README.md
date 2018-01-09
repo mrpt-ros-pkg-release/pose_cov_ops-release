@@ -1,3 +1,26 @@
+## pose_cov_ops (kinetic) - 0.2.0-0
+
+The packages in the `pose_cov_ops` repository were released into the `kinetic` distro by running `/usr/bin/bloom-release pose_cov_ops --track kinetic --rosdistro kinetic` on `Tue, 09 Jan 2018 22:08:23 -0000`
+
+The `pose_cov_ops` package was released.
+
+Version of package(s) in repository `pose_cov_ops`:
+
+- upstream repository: https://github.com/mrpt-ros-pkg/pose_cov_ops.git
+- release repository: https://github.com/mrpt-ros-pkg-release/pose_cov_ops-release.git
+- rosdistro version: `0.1.7-0`
+- old version: `0.1.7-0`
+- new version: `0.2.0-0`
+
+Versions of tools used:
+
+- bloom version: `0.6.1`
+- catkin_pkg version: `0.3.9`
+- rosdep version: `0.11.8`
+- rosdistro version: `0.6.4`
+- vcstools version: `0.1.40`
+
+
 ## pose_cov_ops (kinetic) - 0.1.7-0
 
 The packages in the `pose_cov_ops` repository were released into the `kinetic` distro by running `/usr/bin/bloom-release pose_cov_ops --track kinetic --rosdistro kinetic` on `Sat, 09 Dec 2017 01:17:20 -0000`
