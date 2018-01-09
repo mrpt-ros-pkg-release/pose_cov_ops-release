@@ -2,6 +2,11 @@
 Changelog for package pose_cov_ops
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.0 (2018-01-09)
+------------------
+* Made compatible with MRPT 1.x and 2.x
+* Contributors: Jose Luis Blanco Claraco
+
 0.1.7 (2017-12-09)
 ------------------
 * relaxing need to find lib mrpt >=1.5
@@ -38,4 +43,3 @@ Changelog for package pose_cov_ops
 ------------------
 * consistent version numbers
 * Fixed: pose_cov_ops needs export section in manifest
-
