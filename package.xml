@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>pose_cov_ops</name>
-  <version>0.3.0</version>
+  <version>0.3.1</version>
   <description>C++ library for SE(2/3) pose and 2D/3D point
     composition operations with uncertainty</description>
 
@@ -13,7 +13,7 @@
 
   <url type="website">https://wiki.ros.org/pose_cov_ops</url>
 
-  <depend>mrpt2</depend> <!-- Depend on mrpt1 ROS pkgs -->
+  <depend>mrpt2</depend>
 
   <depend>roscpp</depend>
   <depend>geometry_msgs</depend>
