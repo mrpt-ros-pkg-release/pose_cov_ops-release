@@ -2,9 +2,11 @@ execute_process(COMMAND bash -c "env | grep ROS" OUTPUT_VARIABLE ENV_VAL)
 message(STATUS "Env variables:\n${ENV_VAL}")
 if ("$ENV{ROS_VERSION}" STREQUAL "2")
 	cmake_minimum_required(VERSION 3.8)
+	set(PACKAGE_ROS_VERSION 2)
 	set(ROS_2 TRUE)
 else()
 	cmake_minimum_required(VERSION 3.1)
+	set(PACKAGE_ROS_VERSION 1)
 	set(ROS_1 TRUE)
 endif()
 
@@ -37,6 +39,8 @@ if (ROS_1)
 		CATKIN_DEPENDS
 				geometry_msgs
 		)
+		
+	find_package(mrpt-ros1bridge REQUIRED)
 endif()
 
 # -----------------------------------------
@@ -45,13 +49,29 @@ endif()
 if (ROS_2)
 	# find dependencies
 	find_package(ament_cmake REQUIRED)
+	
+	find_package(geometry_msgs REQUIRED)
+	find_package(mrpt-ros2bridge REQUIRED)
+
+	# required by mrpt::ros2bridge
+	find_package(rclcpp REQUIRED)
+	find_package(nav_msgs REQUIRED)
+	find_package(stereo_msgs REQUIRED)
+	find_package(sensor_msgs REQUIRED)
+	find_package(tf2 REQUIRED)
+	find_package(cv_bridge REQUIRED)
+	add_library(imp_opencv INTERFACE IMPORTED)
+	set_target_properties(imp_opencv
+		PROPERTIES
+		INTERFACE_INCLUDE_DIRECTORIES "${OpenCV_INCLUDE_DIRS}"
+		INTERFACE_LINK_LIBRARIES "${OpenCV_LIBRARIES}"
+		)
 endif()
 
 # -----------------------------------------
 # ROS 1 & 2 common deps:
 # -----------------------------------------
 find_package(mrpt-poses REQUIRED)
-find_package(mrpt-ros1bridge REQUIRED)
 
 ###########
 ## Build ##
@@ -91,15 +111,30 @@ endif()
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(pose_cov_ops_node pose_cov_ops_generate_messages_cpp)
 
-## Specify libraries to link a library or executable target against
-target_link_libraries(${PROJECT_NAME} PRIVATE
-  ${catkin_LIBRARIES}
-  mrpt::poses
-  mrpt::ros1bridge
-)
+if (ROS_1)
+	target_link_libraries(${PROJECT_NAME} 
+		PRIVATE
+		${catkin_LIBRARIES}
+		mrpt::ros1bridge
+		mrpt::poses
+		)
+else()
+	ament_target_dependencies(${PROJECT_NAME} rclcpp geometry_msgs)
+
+	target_link_libraries(${PROJECT_NAME} 
+		mrpt::ros2bridge
+		mrpt::poses
+		)
+endif()
+
+
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+)
+
+target_compile_definitions(${PROJECT_NAME} PUBLIC
+  PACKAGE_ROS_VERSION=${PACKAGE_ROS_VERSION}
 )
 
 #############
@@ -144,16 +179,16 @@ if (ROS_1)
 endif()
 
 if (ROS_2)
-	find_package(ament_cmake_copyright REQUIRED)
-	find_package(ament_cmake_cppcheck REQUIRED)
-	find_package(ament_cmake_cpplint REQUIRED)
-	find_package(ament_cmake_lint_cmake REQUIRED)
-	find_package(ament_cmake_uncrustify REQUIRED)
+	#find_package(ament_cmake_copyright REQUIRED)
+	#find_package(ament_cmake_cppcheck REQUIRED)
+	#find_package(ament_cmake_cpplint REQUIRED)
+	#find_package(ament_cmake_lint_cmake REQUIRED)
+	#find_package(ament_cmake_uncrustify REQUIRED)
 	find_package(ament_cmake_xmllint REQUIRED)
 
-	ament_copyright()
-	ament_cpplint()
-	ament_lint_cmake()
+	#ament_copyright()
+	#ament_cpplint()
+	#ament_lint_cmake()
 	ament_xmllint()
 
 	find_package(ament_cmake_gtest REQUIRED)
@@ -173,9 +208,13 @@ if (ROS_2)
 endif()
 
 if(TARGET ${PROJECT_NAME}-test)
-target_link_libraries(${PROJECT_NAME}-test 
-	${PROJECT_NAME}
-	mrpt::poses
-	mrpt::ros1bridge
-	)
+	target_link_libraries(${PROJECT_NAME}-test
+		${PROJECT_NAME}
+		mrpt::poses
+		)
+	if (ROS_1)
+		target_link_libraries(${PROJECT_NAME}-test mrpt::ros1bridge)
+	else()
+		target_link_libraries(${PROJECT_NAME}-test mrpt::ros2bridge)
+	endif()
 endif()
