@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>pose_cov_ops</name>
-  <version>0.3.2</version>
+  <version>0.3.3</version>
   <description>C++ library for SE(2)/SE(3) pose composition operations with uncertainty</description>
 
   <maintainer email="jlblanco@ual.es">Jose-Luis Blanco-Claraco</maintainer>
@@ -12,7 +12,9 @@
 
   <url type="website">https://wiki.ros.org/pose_cov_ops</url>
 
-
+  <!-- COMMON DEPS -->
+  <build_depend>ros_environment</build_depend>
+  
   <!-- BUILD TOOLS -->
   <buildtool_depend>cmake</buildtool_depend>
   <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend>
