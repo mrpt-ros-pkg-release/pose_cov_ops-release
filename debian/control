@@ -1,0 +1,12 @@
+Source: ros-noetic-pose-cov-ops
+Section: misc
+Priority: optional
+Maintainer: Jose-Luis Blanco-Claraco <jlblanco@ual.es>
+Build-Depends: debhelper (>= 9.0.0), cmake, libgtest-dev <!nocheck>, ros-noetic-catkin, ros-noetic-geometry-msgs, ros-noetic-mrpt2, ros-noetic-ros-environment, ros-noetic-roscpp, ros-noetic-rosunit <!nocheck>
+Homepage: https://wiki.ros.org/pose_cov_ops
+Standards-Version: 3.9.2
+
+Package: ros-noetic-pose-cov-ops
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-noetic-geometry-msgs, ros-noetic-mrpt2, ros-noetic-roscpp
+Description: C++ library for SE(2)/SE(3) pose composition operations with uncertainty
